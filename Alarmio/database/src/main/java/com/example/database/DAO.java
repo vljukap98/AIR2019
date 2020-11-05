@@ -20,6 +20,7 @@ import java.util.List;
 @Dao
 public interface DAO {
 
+
     /* Sve insert, update i delete funkcije za svaku tablicu */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long[] insertAlarmi(Alarm... alarmi);
@@ -72,7 +73,7 @@ public interface DAO {
 
 
     /* Sve funkcije za dohvaćanje podataka iz tablica*/
-    
+
     @Query("SELECT * FROM ponavljajuciAlarmi")
     public List<PonavljajuciAlarm> loadAllPonavljajuciAlarmi();
 

@@ -5,13 +5,13 @@
     android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/purple_200"
     android:id="@+id/toplayout"
     >
 
     <TextView
         android:textSize="17sp"
-        android:textColor="#ffffff"
+        android:textColor="@color/black"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingRight="10dp">
+        >
+
 
         <TextView
             android:alpha=".8"

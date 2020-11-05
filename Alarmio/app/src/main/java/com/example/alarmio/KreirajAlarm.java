@@ -1,6 +1,7 @@
 package com.example.alarmio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Dao;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -15,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 
@@ -27,17 +29,20 @@ import java.util.Date;
 
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnVrijeme, btnDatum;
+    Button btnVrijeme, btnDatum, btnDodaj;
     String vrijemeObavijest;
     MyDatabase myDatabase;
+    private static DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kreiraj_alarm);
         btnVrijeme = findViewById(R.id.btnVrijeme);
         btnDatum = findViewById(R.id.btnDatum);
+        btnDodaj = findViewById(R.id.btnDodaj);
         btnVrijeme.setOnClickListener(this);
         btnDatum.setOnClickListener(this);
+        btnDodaj.setOnClickListener(this);
         myDatabase = MyDatabase.getInstance(getApplicationContext());
     }
 
@@ -49,12 +54,12 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         }else if (view == btnDatum){
             odaberiDatum();
         }else{
-            dodaj();
+            dodaj(this);
         }
 
     }
 
-    private void dodaj() {
+    private void dodaj(Context context) {
         if (btnVrijeme.getText().toString().equals("Odaberi vrijeme") || btnDatum.getText().toString().equals("Odaberi datum")){
             Toast.makeText(this, "Molimo odaberite vrijeme ili datum", Toast.LENGTH_SHORT).show();
         }else{
@@ -63,7 +68,9 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
             String vrijeme = btnVrijeme.getText().toString().trim();
             alarm.setDatum(datum);
             alarm.setVrijeme(vrijeme);
-            myDatabase.getDAO().insertAlarmi(alarm);
+
+            dao = MyDatabase.getInstance(context).getDAO();
+            dao.insertAlarmi(alarm);
             postaviAlarm(datum,vrijeme);
         }
     }

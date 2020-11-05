@@ -31,6 +31,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         holder.vrijemeIDatumText.setText(alarmList.get(position).getDatum() + " " + alarmList.get(position).getVrijeme());
     }
 
@@ -44,6 +45,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
         private LinearLayout toplayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            eventText = (TextView) itemView.findViewById(R.id.dogadaj);
             vrijemeIDatumText = (TextView) itemView.findViewById(R.id.vrijeme_datum);
             toplayout = (LinearLayout) itemView.findViewById(R.id.toplayout);
         }
