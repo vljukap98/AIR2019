@@ -5,22 +5,22 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.example.database.converter.DateConverter;
+
 
 import java.sql.Time;
 import java.util.Date;
 import java.time.LocalTime;
 
 @Entity(tableName = "alarmi")
-@TypeConverters(DateConverter.class)
+
 public class Alarm {
     @PrimaryKey(autoGenerate = true)
     int alarmId;
 
     String naziv;
     String opis;
-    Date datum;
-    Time vrijeme;
+    String datum;
+    String vrijeme;
 
     public int getAlarmId() {
         return alarmId;
@@ -46,19 +46,19 @@ public class Alarm {
         this.opis = opis;
     }
 
-    public Date getDatum() {
+    public String getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(String datum) {
         this.datum = datum;
     }
 
-    public Time getVrijeme() {
+    public String getVrijeme() {
         return vrijeme;
     }
 
-    public void setVrijeme(Time vrijeme) {
+    public void setVrijeme(String vrijeme) {
         this.vrijeme = vrijeme;
     }
 }
