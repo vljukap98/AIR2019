@@ -1,7 +1,7 @@
-package com.example.alarmio
+package com.example.alarmio;
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
