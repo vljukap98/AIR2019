@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.database.entities.Alarm;
@@ -14,8 +15,12 @@ import com.example.database.entities.Mail;
 import com.example.database.entities.PonavljaSeDanom;
 import com.example.database.entities.PonavljajuciAlarm;
 
+import java.util.List;
+
 @Dao
 public interface DAO {
+
+    /* Sve insert, update i delete funkcije za svaku tablicu */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long[] insertAlarmi(Alarm... alarmi);
     @Update
@@ -64,4 +69,20 @@ public interface DAO {
     public void updatePonavljaSeDanom(PonavljaSeDanom... ponavljaSeDanom);
     @Delete
     public void deletePonavljaSeDanom(PonavljaSeDanom... ponavljaSeDanom);
+
+    /* Sve funkcije za dohvaćanje podataka iz tablica*/
+    @Query("SELECT * FROM ponavljajuciAlarmi")
+    public List<PonavljajuciAlarm> loadAllPonavljajuciAlarmi();
+
+    @Query("SELECT * FROM aktivnosti")
+    public List<AndroidAktivnost> loadAllAktivnosti();
+
+    @Query("SELECT * FROM notifikacije")
+    public List<AndroidNotifikacija> loadAllNotifikacije();
+
+    @Query("SELECT * FROM dani")
+    public List<Dani> loadAllDani();
+
+    @Query("SELECT * FROM mail")
+    public List<Mail> loadAllMailovi();
 }
