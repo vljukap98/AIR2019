@@ -70,8 +70,9 @@ public interface DAO {
     @Delete
     public void deletePonavljaSeDanom(PonavljaSeDanom... ponavljaSeDanom);
 
-<<<<<<< Updated upstream
+
     /* Sve funkcije za dohvaćanje podataka iz tablica*/
+    
     @Query("SELECT * FROM ponavljajuciAlarmi")
     public List<PonavljajuciAlarm> loadAllPonavljajuciAlarmi();
 
@@ -86,9 +87,8 @@ public interface DAO {
 
     @Query("SELECT * FROM mail")
     public List<Mail> loadAllMailovi();
-=======
+
     @Query("SELECT * FROM alarmi")
     public List<Alarm> loadAllAlarmi();
 
->>>>>>> Stashed changes
 }
