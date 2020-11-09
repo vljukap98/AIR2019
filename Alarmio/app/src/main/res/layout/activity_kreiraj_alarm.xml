@@ -26,14 +26,25 @@
         android:text="Odaberi datum"
         android:textColor="@color/white" />
 
+    <EditText
+        android:id="@+id/opisTekst"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Unesite opis"
+        />
+
     <Button
         android:id="@+id/btnDodaj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:textColor="@color/white"
+        android:background="@color/design_default_color_primary"
         android:text="Dodaj"
-        android:background="@color/design_default_color_primary" />
+        android:textColor="@color/white" />
+
+
 
 </LinearLayout>

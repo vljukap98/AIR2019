@@ -26,6 +26,17 @@
         android:orientation="horizontal"
         >
 
+        <TextView
+            android:alpha=".8"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:padding="10dp"
+            android:textStyle="bold|italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/opis"
+            android:text=""
+            />
 
         <TextView
             android:alpha=".8"
@@ -36,9 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/vrijeme_datum"
-            android:text="eentadaddafaffa"
+            android:text=""
             />
-
 
     </LinearLayout>
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
     Button btnVrijeme, btnDatum, btnDodaj;
     String vrijemeObavijest;
     MyDatabase myDatabase;
+    EditText opisTekst;
     private static DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         btnDatum.setOnClickListener(this);
         btnDodaj.setOnClickListener(this);
         myDatabase = MyDatabase.getInstance(getApplicationContext());
+        opisTekst = findViewById(R.id.opisTekst);
     }
 
 
@@ -66,12 +69,14 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
             Alarm alarm = new Alarm();
             String datum = btnDatum.getText().toString().trim();
             String vrijeme = btnVrijeme.getText().toString().trim();
+            String opis = opisTekst.getText().toString();
             alarm.setDatum(datum);
             alarm.setVrijeme(vrijeme);
+            alarm.setOpis(opis);
 
             dao = MyDatabase.getInstance(context).getDAO();
             dao.insertAlarmi(alarm);
-            postaviAlarm(datum,vrijeme);
+            postaviAlarm(datum, vrijeme, opis);
         }
     }
 
@@ -103,12 +108,13 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         timePickerDialog.show();
     }
 
-    private void postaviAlarm(String datum, String vrijeme){
+    private void postaviAlarm(String datum, String vrijeme, String opis){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(getApplicationContext(),Alarmio.class);
         intent.putExtra("datum", datum);
         intent.putExtra("vrijeme", vrijeme);
+        intent.putExtra("opis", opis);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,PendingIntent.FLAG_ONE_SHOT);
         String vrijeme_datum = datum + " " + vrijeme;
