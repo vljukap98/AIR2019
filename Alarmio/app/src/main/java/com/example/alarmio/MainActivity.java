@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
@@ -14,7 +16,7 @@ import com.example.database.entities.Alarm;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button kreirajAlarm;
+    Button kreirajAlarm, btnObrisi;
     PocetniDogadaj pocetniDogadaj;
     RecyclerView recyclerView;
     MyDatabase myDatabase;
@@ -24,18 +26,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         kreirajAlarm = findViewById(R.id.btnKreirajAlarm);
+        btnObrisi = findViewById(R.id.btnObrisi);
         recyclerView = findViewById(R.id.recyclerview);
         kreirajAlarm.setOnClickListener(this);
         myDatabase = MyDatabase.getInstance(getApplicationContext());
     }
 
+
     @Override
     protected void onResume(){
         super.onResume();
         postaviDogadaj();
+
     }
 
-    private void postaviDogadaj(){
+    public void postaviDogadaj(){
         List<Alarm> alarmList = myDatabase.getDAO().loadAllAlarmi();
         pocetniDogadaj = new PocetniDogadaj(getApplicationContext(),alarmList);
         recyclerView.setAdapter(pocetniDogadaj);
