@@ -35,6 +35,55 @@
         android:hint="Unesite opis"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/chkPon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pon" />
+
+        <CheckBox
+            android:id="@+id/chkUto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uto" />
+
+        <CheckBox
+            android:id="@+id/chkSri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sri" />
+
+        <CheckBox
+            android:id="@+id/chkCet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Čet" />
+
+        <CheckBox
+            android:id="@+id/chkPet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pet" />
+
+        <CheckBox
+            android:id="@+id/chkSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sub" />
+
+        <CheckBox
+            android:id="@+id/chkNed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ned" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnDodaj"
         android:layout_width="wrap_content"

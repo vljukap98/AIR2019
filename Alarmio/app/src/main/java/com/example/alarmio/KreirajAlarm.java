@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -31,6 +32,7 @@ import java.util.Date;
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
 
     Button btnVrijeme, btnDatum, btnDodaj;
+    CheckBox chkPon, chkUto, chkSri, chkCet, chkPet, chkSub, chkNed;
     String vrijemeObavijest;
     MyDatabase myDatabase;
     EditText opisTekst;
@@ -42,6 +44,13 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         btnVrijeme = findViewById(R.id.btnVrijeme);
         btnDatum = findViewById(R.id.btnDatum);
         btnDodaj = findViewById(R.id.btnDodaj);
+        chkPon = findViewById(R.id.chkPon);
+        chkUto = findViewById(R.id.chkUto);
+        chkSri = findViewById(R.id.chkSri);
+        chkCet = findViewById(R.id.chkCet);
+        chkPet = findViewById(R.id.chkPet);
+        chkSub = findViewById(R.id.chkSub);
+        chkNed = findViewById(R.id.chkNed);
         btnVrijeme.setOnClickListener(this);
         btnDatum.setOnClickListener(this);
         btnDodaj.setOnClickListener(this);
