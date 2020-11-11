@@ -19,8 +19,6 @@ import java.util.List;
 
 @Dao
 public interface DAO {
-
-
     /* Sve insert, update i delete funkcije za svaku tablicu */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long[] insertAlarmi(Alarm... alarmi);
@@ -92,4 +90,9 @@ public interface DAO {
     @Query("SELECT * FROM alarmi")
     public List<Alarm> loadAllAlarmi();
 
+    @Query("SELECT * FROM ponavljaSeDanom")
+    public List<PonavljaSeDanom> loadAllPonavljaSeDanom();
+
+    @Query("SELECT d.danId, d.naziv  FROM dani d, ponavljajuciAlarmi p, ponavljaSeDanom pd WHERE pd.danId=d.danId AND pd.ponavljajuciAlarmId=:ponavljajuciAlarmId ")
+    public List<Dani> loadAllPonavljanjeByAlarm(int ponavljajuciAlarmId);
 }
