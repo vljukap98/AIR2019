@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void postaviDogadaj(){
         List<Alarm> alarmList = myDatabase.getDAO().loadAllAlarmi();
-        pocetniDogadaj = new PocetniDogadaj(getApplicationContext(),alarmList);
         List<Dani> daniList = myDatabase.getDAO().loadAllDani();
         List<PonavljajuciAlarm> ponavljajuciAlarmList = myDatabase.getDAO().loadAllPonavljajuciAlarmi();
         List<PonavljaSeDanom> ponavljaSeDanomList = myDatabase.getDAO().loadAllPonavljaSeDanom();
