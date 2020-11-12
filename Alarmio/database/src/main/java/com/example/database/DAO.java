@@ -8,12 +8,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.database.entities.Alarm;
-import com.example.database.entities.AndroidAktivnost;
-import com.example.database.entities.AndroidNotifikacija;
 import com.example.database.entities.Dani;
-import com.example.database.entities.Mail;
 import com.example.database.entities.PonavljaSeDanom;
-import com.example.database.entities.PonavljajuciAlarm;
 
 import java.util.List;
 
@@ -28,39 +24,11 @@ public interface DAO {
     public void deleteAlarmi(Alarm... alarmi);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public long[] insertPonavljajuciAlarmi(PonavljajuciAlarm... ponavljajuciAlarmi);
-    @Update
-    public void updatePonavljajuciAlarmi(PonavljajuciAlarm... ponavljajuciAlarmi);
-    @Delete
-    public void deletePonavljajuciAlarmi(PonavljajuciAlarm... ponavljajuciAlarmi);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public long[] insertAktivnosti(AndroidAktivnost... aktivnosti);
-    @Update
-    public void updateAktivnosti(AndroidAktivnost... aktivnosti);
-    @Delete
-    public void deleteAktivnosti(AndroidAktivnost... aktivnosti);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public long[] insertNotifikacije(AndroidNotifikacija... notifikacije);
-    @Update
-    public void updateNotifikacije(AndroidNotifikacija... notifikacije);
-    @Delete
-    public void deleteNotifikacije(AndroidNotifikacija... notifikacije);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long[] insertDani(Dani... dani);
     @Update
     public void updateDani(Dani... dani);
     @Delete
     public void deleteDani(Dani... dani);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public long[] insertMail(Mail... mail);
-    @Update
-    public void updateMail(Mail... mail);
-    @Delete
-    public void deleteMail(Mail... mail);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long[] insertPonavljaSeDanom(PonavljaSeDanom... ponavljaSeDanom);
@@ -71,28 +39,24 @@ public interface DAO {
 
 
     /* Sve funkcije za dohvaćanje podataka iz tablica*/
-
-    @Query("SELECT * FROM ponavljajuciAlarmi")
-    public List<PonavljajuciAlarm> loadAllPonavljajuciAlarmi();
-
-    @Query("SELECT * FROM aktivnosti")
-    public List<AndroidAktivnost> loadAllAktivnosti();
-
-    @Query("SELECT * FROM notifikacije")
-    public List<AndroidNotifikacija> loadAllNotifikacije();
-
     @Query("SELECT * FROM dani")
-    public List<Dani> loadAllDani();
-
-    @Query("SELECT * FROM mail")
-    public List<Mail> loadAllMailovi();
+    List<Dani> loadAllDani();
 
     @Query("SELECT * FROM alarmi")
-    public List<Alarm> loadAllAlarmi();
+    List<Alarm> loadAllAlarmi();
 
     @Query("SELECT * FROM ponavljaSeDanom")
-    public List<PonavljaSeDanom> loadAllPonavljaSeDanom();
+    List<PonavljaSeDanom> loadAllPonavljaSeDanom();
 
-    @Query("SELECT d.danId, d.naziv  FROM dani d, ponavljajuciAlarmi p, ponavljaSeDanom pd WHERE pd.danId=d.danId AND pd.ponavljajuciAlarmId=:ponavljajuciAlarmId ")
-    public List<Dani> loadAllPonavljanjeByAlarm(int ponavljajuciAlarmId);
+    @Query("SELECT d.danId, d.naziv  FROM dani d, alarmi a, ponavljaSeDanom pd WHERE pd.danId=d.danId AND pd.alarmId = :alarmId")
+    List<Dani> loadAllPonavljanjeByAlarm(int alarmId);
+
+    @Query("SELECT danId, naziv  FROM dani WHERE naziv = :danNaziv")
+    List<Dani> loadAllDanByNaziv(String danNaziv);
+
+    @Query("SELECT count(*) FROM dani")
+    Integer daniTableSize();
+
+    @Query("DELETE FROM ponavljaSeDanom WHERE alarmId = :alarmId")
+    void deleteAllPonavljanjeByAlarm(int alarmId);
 }

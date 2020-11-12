@@ -23,8 +23,8 @@ import android.widget.Toast;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
+import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
-import com.example.database.entities.PonavljajuciAlarm;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -60,76 +60,6 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         chkPet = findViewById(R.id.chkPet);
         chkSub = findViewById(R.id.chkSub);
         chkNed = findViewById(R.id.chkNed);
-        chkPon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkPon.isChecked())
-                {
-                    ponavljajuciDani.add("Ponedjeljak");
-                    Log.d("PonavljajuciDaniLista", "Pon u listu");
-                }
-            }
-        });
-        chkUto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkUto.isChecked())
-                {
-                    ponavljajuciDani.add("Utorak");
-                    Log.d("PonavljajuciDaniLista", "Uto u listu");
-                }
-            }
-        });
-        chkSri.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkSri.isChecked())
-                {
-                    ponavljajuciDani.add("Srijeda");
-                    Log.d("PonavljajuciDaniLista", "Sri u listu");
-                }
-            }
-        });
-        chkCet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkCet.isChecked())
-                {
-                    ponavljajuciDani.add("Četvrtak");
-                    Log.d("PonavljajuciDaniLista", "Čet u listu");
-                }
-            }
-        });
-        chkPet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkPet.isChecked())
-                {
-                    ponavljajuciDani.add("Petak");
-                    Log.d("PonavljajuciDaniLista", "Pet u listu");
-                }
-            }
-        });
-        chkSub.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkSub.isChecked())
-                {
-                    ponavljajuciDani.add("Subota");
-                    Log.d("PonavljajuciDaniLista", "Sub u listu");
-                }
-            }
-        });
-        chkNed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(chkNed.isChecked())
-                {
-                    ponavljajuciDani.add("Nedjelja");
-                    Log.d("PonavljajuciDaniLista", "Ned u listu");
-                }
-            }
-        });
         btnVrijeme.setOnClickListener(this);
         btnDatum.setOnClickListener(this);
         btnDodaj.setOnClickListener(this);
@@ -167,10 +97,29 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         if (btnVrijeme.getText().toString().equals("Odaberi vrijeme") || btnDatum.getText().toString().equals("Odaberi datum")){
             Toast.makeText(this, "Molimo odaberite vrijeme ili datum", Toast.LENGTH_SHORT).show();
         }else{
-            if (ponavljajuciDani != null && ponavljajuciDani.isEmpty())
-                ponavljanje = false;
-            else
+            if(chkPon.isChecked() || chkUto.isChecked() || chkSri.isChecked() || chkCet.isChecked() || chkPet.isChecked() || chkSub.isChecked() || chkNed.isChecked())
                 ponavljanje = true;
+
+            if(chkPon.isChecked())
+                ponavljajuciDani.add("Ponedjeljak");
+
+            if (chkUto.isChecked())
+                ponavljajuciDani.add("Utorak");
+
+            if (chkSri.isChecked())
+                ponavljajuciDani.add("Srijeda");
+
+            if (chkCet.isChecked())
+                ponavljajuciDani.add("Četvrtak");
+
+            if (chkPet.isChecked())
+                ponavljajuciDani.add("Petak");
+
+            if (chkSub.isChecked())
+                ponavljajuciDani.add("Subota");
+
+            if (chkNed.isChecked())
+                ponavljajuciDani.add("Nedjelja");
 
             dao = MyDatabase.getInstance(context).getDAO();
 
@@ -181,58 +130,48 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
             alarm.setDatum(datum);
             alarm.setVrijeme(vrijeme);
             alarm.setOpis(opis);
-            dao.insertAlarmi(alarm);
+            alarm.setAlarmId((int)dao.insertAlarmi(alarm)[0]);
 
             if(ponavljanje=true)
             {
-                PonavljajuciAlarm ponavljajuciAlarm = new PonavljajuciAlarm();
-                ponavljajuciAlarm.setAlarmId(alarm.getAlarmId());
-                dao.insertPonavljajuciAlarmi(ponavljajuciAlarm);
                 for (String dan:ponavljajuciDani) {
                     if(dan=="Ponedjeljak")
                     {
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(1);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Pon u bazu");
                     }else if(dan=="Utorak")
                     {
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(2);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Uto u bazu");
                     }else if(dan=="Srijeda"){
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(3);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Sri u bazu");
                     }else if(dan=="Četvrtak"){
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(4);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Čet u bazu");
                     }else if(dan=="Petak"){
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(5);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Pet u bazu");
                     }else if(dan=="Subota"){
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(6);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Sub u bazu");
                     }else if(dan=="Nedjelja"){
                         PonavljaSeDanom ponavljaSeDanom = new PonavljaSeDanom();
-                        ponavljaSeDanom.setDanId(7);
-                        ponavljaSeDanom.setPonavljajuciAlarmId(ponavljajuciAlarm.getPonavljajuciAlarmId());
+                        ponavljaSeDanom.setDanId(dao.loadAllDanByNaziv(dan).get(0).getDanId());
+                        ponavljaSeDanom.setAlarmId(alarm.getAlarmId());
                         dao.insertPonavljaSeDanom(ponavljaSeDanom);
-                        Log.d("PonavljaSeDanom", "Ned u bazu");
                     }
                 }
             }

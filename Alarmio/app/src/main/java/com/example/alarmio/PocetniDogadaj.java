@@ -22,7 +22,6 @@ import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
-import com.example.database.entities.PonavljajuciAlarm;
 
 import java.util.List;
 
@@ -32,16 +31,14 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
     Context context;
     List<Alarm> alarmList;
     List<Dani> daniList;
-    List<PonavljajuciAlarm> ponavljajuciAlarmList;
     List<PonavljaSeDanom> ponavljaSeDanomList;
     private static DAO dao;
     PocetniDogadaj pocetniDogadaj;
 
-    public PocetniDogadaj(Context context, List<Alarm> alarmList, List<Dani> daniList, List<PonavljajuciAlarm> ponavljajuciAlarmList, List<PonavljaSeDanom> ponavljaSeDanomList) {
+    public PocetniDogadaj(Context context, List<Alarm> alarmList, List<Dani> daniList, List<PonavljaSeDanom> ponavljaSeDanomList) {
         this.context = context;
         this.alarmList = alarmList;
         this.daniList = daniList;
-        this.ponavljajuciAlarmList = ponavljajuciAlarmList;
         this.ponavljaSeDanomList = ponavljaSeDanomList;
     }
 
@@ -56,13 +53,11 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
         holder.vrijemeIDatumText.setText(alarmList.get(position).getDatum() + " " + alarmList.get(position).getVrijeme());
         holder.opisText.setText(alarmList.get(position).getOpis());
         dao = MyDatabase.getInstance(context).getDAO();
-        for (PonavljajuciAlarm ponavljajuciAlarm : ponavljajuciAlarmList){
-            List<Dani> ponavljanjeDani = dao.loadAllPonavljanjeByAlarm(ponavljajuciAlarm.getPonavljajuciAlarmId());
-            Log.d("ProvjeraUpita", ponavljanjeDani.toString());
-            String ponoviDani = "Nekaj";
+        for (Alarm ponavljajuciAlarm : alarmList){
+            List<Dani> ponavljanjeDani = dao.loadAllPonavljanjeByAlarm(ponavljajuciAlarm.getAlarmId());
+            String ponoviDani = "";
             for(Dani dan : ponavljanjeDani){
-                ponoviDani += dan.getNaziv();
-                Log.d("ProvjeriString", ponoviDani);
+                ponoviDani += dan.getNaziv() + "\n";
             }
             holder.dani.setText(ponoviDani);
         }
@@ -78,6 +73,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                     }
                 }
                 dao.deleteAlarmi(alarm);
+                dao.deleteAllPonavljanjeByAlarm(alarm.getAlarmId());
                 /*Treba doraditi*/
                 alarmList.remove(alarmList.get(position));
                 holder.toplayout.removeViewAt(position);
@@ -100,12 +96,12 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
         private LinearLayout toplayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            eventText = (TextView) itemView.findViewById(R.id.dogadaj);
-            vrijemeIDatumText = (TextView) itemView.findViewById(R.id.vrijeme_datum);
-            toplayout = (LinearLayout) itemView.findViewById(R.id.toplayout);
-            opisText = (TextView) itemView.findViewById(R.id.opis);
-            brisanjeAlarma = (Button) itemView.findViewById(R.id.btnObrisi);
-            dani = (TextView) itemView.findViewById(R.id.dani);
+            eventText = itemView.findViewById(R.id.dogadaj);
+            vrijemeIDatumText = itemView.findViewById(R.id.vrijeme_datum);
+            toplayout = itemView.findViewById(R.id.toplayout);
+            opisText = itemView.findViewById(R.id.opis);
+            brisanjeAlarma = itemView.findViewById(R.id.btnObrisi);
+            dani = itemView.findViewById(R.id.dani);
         }
     }
 }

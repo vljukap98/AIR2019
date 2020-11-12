@@ -15,7 +15,6 @@ import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
-import com.example.database.entities.PonavljajuciAlarm;
 
 import java.util.List;
 
@@ -36,33 +35,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myDatabase = MyDatabase.getInstance(getApplicationContext());
 
         DAO dao = myDatabase.getDAO();
-        Dani danPon = new Dani();
-        danPon.setNaziv("Ponedjeljak");
-        dao.insertDani(danPon);
+        if(dao.daniTableSize() == 0) {
+            Dani danPon = new Dani();
+            danPon.setNaziv("Ponedjeljak");
+            danPon.setDanId((int) dao.insertDani(danPon)[0]);
 
-        Dani danUto = new Dani();
-        danPon.setNaziv("Utorak");
-        dao.insertDani(danUto);
+            Dani danUto = new Dani();
+            danUto.setNaziv("Utorak");
+            danUto.setDanId((int) dao.insertDani(danUto)[0]);
 
-        Dani danSri = new Dani();
-        danPon.setNaziv("Srijeda");
-        dao.insertDani(danSri);
+            Dani danSri = new Dani();
+            danSri.setNaziv("Srijeda");
+            danSri.setDanId((int) dao.insertDani(danSri)[0]);
 
-        Dani danCet = new Dani();
-        danPon.setNaziv("Četvrtak");
-        dao.insertDani(danCet);
+            Dani danCet = new Dani();
+            danCet.setNaziv("Četvrtak");
+            danCet.setDanId((int) dao.insertDani(danCet)[0]);
 
-        Dani danPet = new Dani();
-        danPon.setNaziv("Petak");
-        dao.insertDani(danPet);
+            Dani danPet = new Dani();
+            danPet.setNaziv("Petak");
+            danPet.setDanId((int) dao.insertDani(danPet)[0]);
 
-        Dani danSub = new Dani();
-        danPon.setNaziv("Subota");
-        dao.insertDani(danSub);
+            Dani danSub = new Dani();
+            danSub.setNaziv("Subota");
+            danSub.setDanId((int) dao.insertDani(danSub)[0]);
 
-        Dani danNed = new Dani();
-        danPon.setNaziv("Nedjelja");
-        dao.insertDani(danNed);
+            Dani danNed = new Dani();
+            danNed.setNaziv("Nedjelja");
+            danNed.setDanId((int) dao.insertDani(danNed)[0]);
+        }
     }
 
 
@@ -76,10 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void postaviDogadaj(){
         List<Alarm> alarmList = myDatabase.getDAO().loadAllAlarmi();
         List<Dani> daniList = myDatabase.getDAO().loadAllDani();
-        List<PonavljajuciAlarm> ponavljajuciAlarmList = myDatabase.getDAO().loadAllPonavljajuciAlarmi();
         List<PonavljaSeDanom> ponavljaSeDanomList = myDatabase.getDAO().loadAllPonavljaSeDanom();
-        Log.d("ProvjeraPonavlja", ponavljajuciAlarmList.toString());
-        pocetniDogadaj = new PocetniDogadaj(getApplicationContext(),alarmList, daniList, ponavljajuciAlarmList, ponavljaSeDanomList);
+        pocetniDogadaj = new PocetniDogadaj(getApplicationContext(),alarmList, daniList, ponavljaSeDanomList);
         recyclerView.setAdapter(pocetniDogadaj);
     }
 

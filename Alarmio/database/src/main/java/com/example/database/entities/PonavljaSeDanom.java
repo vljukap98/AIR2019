@@ -4,22 +4,22 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-@Entity(tableName = "ponavljaSeDanom", primaryKeys = {"ponavljajuciAlarmId","danId"})
+@Entity(tableName = "ponavljaSeDanom", primaryKeys = {"alarmId","danId"})
 public class PonavljaSeDanom {
-    @ForeignKey(entity = PonavljajuciAlarm.class, parentColumns = "ponavljajuciAlarmId", childColumns = "ponavljajuciAlarmId")
+    @ForeignKey(entity = Alarm.class, parentColumns = "alarmId", childColumns = "alarmId")
     @ColumnInfo(index = true)
-    int ponavljajuciAlarmId;
+    int alarmId;
 
     @ForeignKey(entity = Dani.class, parentColumns = "danId", childColumns = "danId")
     @ColumnInfo(index = true)
     int danId;
 
-    public int getPonavljajuciAlarmId() {
-        return ponavljajuciAlarmId;
+    public int getAlarmId() {
+        return alarmId;
     }
 
-    public void setPonavljajuciAlarmId(int ponavljajuciAlarmId) {
-        this.ponavljajuciAlarmId = ponavljajuciAlarmId;
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
     }
 
     public int getDanId() {
