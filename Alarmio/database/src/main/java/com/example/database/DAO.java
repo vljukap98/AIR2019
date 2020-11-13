@@ -39,7 +39,7 @@ public interface DAO {
     public void deletePonavljaSeDanom(PonavljaSeDanom... ponavljaSeDanom);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public long[] inserttipNotifikacija(TipNotifikacije... tipNotifikacija);
+    public long[] insertTipNotifikacija(TipNotifikacije... tipNotifikacija);
     @Update
     public void updateTipNotifikacija(TipNotifikacije... tipNotifikacija);
     @Delete

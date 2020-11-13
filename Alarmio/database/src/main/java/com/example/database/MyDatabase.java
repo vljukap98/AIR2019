@@ -9,9 +9,10 @@ import androidx.room.RoomDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
+import com.example.database.entities.TipNotifikacije;
 
 @Database(version = 1,
-        entities = {Alarm.class, Dani.class, PonavljaSeDanom.class},
+        entities = {Alarm.class, Dani.class, PonavljaSeDanom.class, TipNotifikacije.class},
         exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
     public static final String NAME = "main";
