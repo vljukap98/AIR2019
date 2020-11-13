@@ -176,6 +176,8 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
+            ponavljajuciDani.clear();
+
             postaviAlarm(datum, vrijeme, opis);
         }
     }

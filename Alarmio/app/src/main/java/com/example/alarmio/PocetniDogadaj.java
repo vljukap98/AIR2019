@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,19 +50,20 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.redovi, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.vrijemeIDatumText.setText(alarmList.get(position).getDatum() + " " + alarmList.get(position).getVrijeme());
         holder.opisText.setText(alarmList.get(position).getOpis());
         dao = MyDatabase.getInstance(context).getDAO();
-        for (Alarm ponavljajuciAlarm : alarmList){
-            List<Dani> ponavljanjeDani = dao.loadAllPonavljanjeByAlarm(ponavljajuciAlarm.getAlarmId());
-            String ponoviDani = "";
-            for(Dani dan : ponavljanjeDani){
-                ponoviDani += dan.getNaziv() + "\n";
-            }
-            holder.dani.setText(ponoviDani);
+        String ponoviDani = "";
+        List<String> ponavljanjeDani = dao.loadAllPonavljanjeByAlarm(alarmList.get(position).getAlarmId());
+        Log.d("listaUpita", ponavljanjeDani.toString());
+        for(String dan : ponavljanjeDani){
+            ponoviDani += dan + "\n";
+            Log.d("ponoviDani", ponoviDani);
         }
+        holder.dani.setText(ponoviDani);
         holder.brisanjeAlarma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

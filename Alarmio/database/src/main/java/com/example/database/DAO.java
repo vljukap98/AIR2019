@@ -48,8 +48,8 @@ public interface DAO {
     @Query("SELECT * FROM ponavljaSeDanom")
     List<PonavljaSeDanom> loadAllPonavljaSeDanom();
 
-    @Query("SELECT d.danId, d.naziv  FROM dani d, alarmi a, ponavljaSeDanom pd WHERE pd.danId=d.danId AND pd.alarmId = :alarmId")
-    List<Dani> loadAllPonavljanjeByAlarm(int alarmId);
+    @Query("SELECT  DISTINCT d.naziv  FROM dani d, alarmi a, ponavljaSeDanom pd WHERE pd.alarmId = :alarmId AND d.danId = pd.danId")
+    List<String> loadAllPonavljanjeByAlarm(int alarmId);
 
     @Query("SELECT danId, naziv  FROM dani WHERE naziv = :danNaziv")
     List<Dani> loadAllDanByNaziv(String danNaziv);
