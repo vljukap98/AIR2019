@@ -2,6 +2,7 @@ package com.example.database.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -12,7 +13,6 @@ import java.util.Date;
 import java.time.LocalTime;
 
 @Entity(tableName = "alarmi")
-
 public class Alarm {
     @PrimaryKey(autoGenerate = true)
     int alarmId;
@@ -21,6 +21,10 @@ public class Alarm {
     String opis;
     String datum;
     String vrijeme;
+
+    @ForeignKey(entity = TipNotifikacije.class, parentColumns = "tipNotifikacijeId", childColumns = "tipNotifikacijeId")
+    @ColumnInfo(index = true)
+    int tipNotifikacijeId;
 
     public int getAlarmId() {
         return alarmId;
@@ -60,5 +64,13 @@ public class Alarm {
 
     public void setVrijeme(String vrijeme) {
         this.vrijeme = vrijeme;
+    }
+
+    public int getTipNotifikacijeId() {
+        return tipNotifikacijeId;
+    }
+
+    public void setTipNotifikacijeId(int tipNotifikacijeId) {
+        this.tipNotifikacijeId = tipNotifikacijeId;
     }
 }

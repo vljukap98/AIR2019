@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
+import com.example.database.entities.TipNotifikacije;
 
 import java.util.List;
 
@@ -37,6 +38,13 @@ public interface DAO {
     @Delete
     public void deletePonavljaSeDanom(PonavljaSeDanom... ponavljaSeDanom);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public long[] inserttipNotifikacija(TipNotifikacije... tipNotifikacija);
+    @Update
+    public void updateTipNotifikacija(TipNotifikacije... tipNotifikacija);
+    @Delete
+    public void deleteTipNotifikacija(TipNotifikacije... tipNotifikacija);
+
 
     /* Sve funkcije za dohvaćanje podataka iz tablica*/
     @Query("SELECT * FROM dani")
@@ -47,6 +55,9 @@ public interface DAO {
 
     @Query("SELECT * FROM ponavljaSeDanom")
     List<PonavljaSeDanom> loadAllPonavljaSeDanom();
+
+    @Query("SELECT * FROM tipNotifikacija")
+    List<TipNotifikacije> loadAllTipNotifikacija();
 
     @Query("SELECT  DISTINCT d.naziv  FROM dani d, alarmi a, ponavljaSeDanom pd WHERE pd.alarmId = :alarmId AND d.danId = pd.danId")
     List<String> loadAllPonavljanjeByAlarm(int alarmId);
