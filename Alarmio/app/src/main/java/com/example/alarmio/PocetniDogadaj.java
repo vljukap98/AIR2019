@@ -102,6 +102,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                 Intent intent = new Intent(context, AzurirajAlarm.class);
                 intent.putExtra("Alarm", alarm);
                 Log.d("Slanje objekta",alarm.toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
