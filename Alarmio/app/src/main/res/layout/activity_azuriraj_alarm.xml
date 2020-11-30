@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AzurirajAlarm"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnVrijeme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/black"
+        android:text="Izmjeni vrijeme"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/btnDatum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/black"
+        android:text="Izmjeni datum"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/opisTekst"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Izmjeni opis"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/chkPon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pon" />
+
+        <CheckBox
+            android:id="@+id/chkUto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uto" />
+
+        <CheckBox
+            android:id="@+id/chkSri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sri" />
+
+        <CheckBox
+            android:id="@+id/chkCet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Čet" />
+
+        <CheckBox
+            android:id="@+id/chkPet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pet" />
+
+        <CheckBox
+            android:id="@+id/chkSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sub" />
+
+        <CheckBox
+            android:id="@+id/chkNed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ned" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSvakiDan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@color/design_default_color_primary"
+        android:text="Ponavljanje svaki dan"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btnIzmjeni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@color/design_default_color_primary"
+        android:text="Izmjeni"
+        android:textColor="@color/white" />
+
+</LinearLayout>

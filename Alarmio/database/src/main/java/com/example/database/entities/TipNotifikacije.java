@@ -3,8 +3,10 @@ package com.example.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "tipNotifikacija")
-public class TipNotifikacije {
+public class TipNotifikacije implements Serializable {
     @PrimaryKey(autoGenerate = true)
     int tipNotifikacijeId;
 

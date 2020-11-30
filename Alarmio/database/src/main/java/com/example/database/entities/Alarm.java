@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 
-
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 import java.time.LocalTime;
 
 @Entity(tableName = "alarmi")
-public class Alarm {
+public class Alarm implements Serializable {
     @PrimaryKey(autoGenerate = true)
     int alarmId;
 

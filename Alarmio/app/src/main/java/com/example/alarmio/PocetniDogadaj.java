@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.example.database.entities.PonavljaSeDanom;
 import java.util.List;
 
 import static android.media.CamcorderProfile.get;
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHolder> {
     Context context;
@@ -86,6 +88,23 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                 pocetniDogadaj.notifyItemRangeChanged(position,alarmList.size());*/
             }
         });
+        holder.azuriranjeAlarma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Alarm alarm = new Alarm();
+                int id = alarmList.get(position).getAlarmId();
+                dao = MyDatabase.getInstance(context).getDAO();
+                for (Alarm a : alarmList) {
+                    if (a.getAlarmId() == id){
+                        alarm = a;
+                    }
+                }
+                Intent intent = new Intent(context, AzurirajAlarm.class);
+                intent.putExtra("Alarm", alarm);
+                Log.d("Slanje objekta",alarm.toString());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -95,7 +114,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView eventText, vrijemeIDatumText, opisText, dani;
-        Button brisanjeAlarma;
+        Button brisanjeAlarma, azuriranjeAlarma;
         private LinearLayout toplayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,6 +123,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
             toplayout = itemView.findViewById(R.id.toplayout);
             opisText = itemView.findViewById(R.id.opis);
             brisanjeAlarma = itemView.findViewById(R.id.btnObrisi);
+            azuriranjeAlarma = itemView.findViewById(R.id.btnIzmjeni);
             dani = itemView.findViewById(R.id.dani);
         }
     }

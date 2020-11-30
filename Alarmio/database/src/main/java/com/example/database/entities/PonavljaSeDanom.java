@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "ponavljaSeDanom", primaryKeys = {"alarmId","danId"})
-public class PonavljaSeDanom {
+public class PonavljaSeDanom implements Serializable {
     @ForeignKey(entity = Alarm.class, parentColumns = "alarmId", childColumns = "alarmId")
     @ColumnInfo(index = true)
     int alarmId;
