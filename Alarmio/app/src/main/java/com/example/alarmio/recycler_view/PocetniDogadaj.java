@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alarmio.R;
 import com.example.alarmio.alarm_funkcije.AzurirajAlarm;
+import com.example.alarmio.alarm_funkcije.KreirajAlarm;
+import com.example.alarmio.pokretanje_alarma.Alarmio;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
@@ -100,11 +103,49 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                 }
                 Intent intent = new Intent(context, AzurirajAlarm.class);
                 intent.putExtra("Alarm", alarm);
-                Log.d("Slanje objekta",alarm.toString());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
+        holder.dodajAlarm.setChecked(true);
+        holder.dodajAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Alarm alarm = new Alarm();
+                int id = alarmList.get(position).getAlarmId();
+                dao = MyDatabase.getInstance(context).getDAO();
+                for (Alarm a : alarmList) {
+                    if (a.getAlarmId() == id){
+                        alarm = a;
+                    }
+                }
+                final Intent intent = new Intent(context, Alarmio.class);
+                if (isChecked)
+                {
+                    PokreniZvoni(intent, alarm);
+                }
+                else
+                {
+                    ZaustaviZvoni(intent);
+                }
+            }
+
+            private void PokreniZvoni(Intent intent, Alarm alarm) {
+                String[] rastavVrijeme = alarm.getVrijeme().split(":");
+
+                intent.putExtra("alarmOpis", alarm.getOpis());
+                intent.putExtra("alarmDatum", alarm.getDatum());
+                intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
+                intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
+                context.startService(intent);
+
+            }
+
+            private void ZaustaviZvoni(Intent intent) {
+                context.stopService(intent);
+            }
+        });
+
     }
 
     @Override

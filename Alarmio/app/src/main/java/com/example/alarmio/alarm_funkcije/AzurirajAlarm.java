@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.alarmio.MainActivity;
 import com.example.alarmio.pokretanje_alarma.Alarmio;
 import com.example.alarmio.R;
 import com.example.database.DAO;
@@ -202,6 +203,7 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
 
             ponavljajuciDani.clear();
             dao.updateAlarmi(alarm);
+
             postaviAlarm(datum, vrijeme, opis);
         }
     }
@@ -235,22 +237,23 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
     }
 
     private void postaviAlarm(String datum, String vrijeme, String opis){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        final Intent intent = new Intent(this, Alarmio.class);
+        ServiceCaller(intent, datum, vrijeme, opis);
+    }
 
-        Intent intent = new Intent(getApplicationContext(), Alarmio.class);
-        intent.putExtra("datum", datum);
-        intent.putExtra("vrijeme", vrijeme);
-        intent.putExtra("opis", opis);
+    private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis) {
+        stopService(intent);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,PendingIntent.FLAG_ONE_SHOT);
-        String vrijeme_datum = datum + " " + vrijeme;
-        DateFormat formatter = new SimpleDateFormat("d-M-yyyy hh:mm");
-        try{
-            Date datum1 = formatter.parse(vrijeme_datum);
-            alarmManager.set(AlarmManager.RTC_WAKEUP,datum1.getTime(),pendingIntent);
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-        finish();
+        String[] rastavVrijeme = vrijeme.split(":");
+
+        intent.putExtra("alarmOpis", opis);
+        intent.putExtra("alarmDatum", datum);
+        intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
+        intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
+
+        startService(intent);
+        Intent popis = new Intent(this, MainActivity.class);
+        popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(popis);
     }
 }

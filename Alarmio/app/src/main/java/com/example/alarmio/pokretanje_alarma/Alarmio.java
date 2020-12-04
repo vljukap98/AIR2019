@@ -17,8 +17,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Alarmio extends Service { //Kada se zatvori aplikacija alarm ne zvoni
-    private Integer alarmHour;
+    private Integer alarmSati;
     private Integer alarmMinute;
+    private String alarmDatum;
     private Ringtone ringtone;
     private Timer t = new Timer();
     Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -31,17 +32,27 @@ public class Alarmio extends Service { //Kada se zatvori aplikacija alarm ne zvo
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        alarmHour = intent.getIntExtra("alarmSati", 0);
+        alarmSati = intent.getIntExtra("alarmSati", 0);
         alarmMinute = intent.getIntExtra("alarmMinute", 0);
+        alarmDatum = intent.getStringExtra("alarmDatum");
+
+        String[] rastavDatum = alarmDatum.split("/");
+
+        Integer alarmDan = Integer.parseInt(rastavDatum[0]);
+        Integer alarmMjesec = Integer.parseInt(rastavDatum[1]) - 1;
+        Integer alarmGodina = Integer.parseInt(rastavDatum[2]);
 
         ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == alarmHour &&
+                if (Calendar.getInstance().get(Calendar.YEAR) == alarmGodina &&
+                    Calendar.getInstance().get(Calendar.MONTH) == alarmMjesec &&
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == alarmDan &&
+                        Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == alarmSati &&
                         Calendar.getInstance().get(Calendar.MINUTE) == alarmMinute &&
-                        Calendar.getInstance().get(Calendar.SECOND) < 10){
+                        Calendar.getInstance().get(Calendar.SECOND) < 15){
                     ringtone.play();
                 }
                 else {
