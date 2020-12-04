@@ -1,38 +1,30 @@
-package com.example.alarmio;
+package com.example.alarmio.alarm_funkcije;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Dao;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.alarmio.pokretanje_alarma.Alarmio;
+import com.example.alarmio.MainActivity;
+import com.example.alarmio.R;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
-import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
@@ -211,24 +203,24 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
     }
 
     private void postaviAlarm(String datum, String vrijeme, String opis){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(getApplicationContext(),Alarmio.class);
-        intent.putExtra("datum", datum);
-        intent.putExtra("vrijeme", vrijeme);
-        intent.putExtra("opis", opis);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,intent,PendingIntent.FLAG_ONE_SHOT);
-        String vrijeme_datum = datum + " " + vrijeme;
-        DateFormat formatter = new SimpleDateFormat("d-M-yyyy hh:mm");
-        try{
-            Date datum1 = formatter.parse(vrijeme_datum);
-            alarmManager.set(AlarmManager.RTC_WAKEUP,datum1.getTime(),pendingIntent);
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-        finish();
+        final Intent intent = new Intent(this, Alarmio.class);
+        ServiceCaller(intent, datum, vrijeme, opis);
     }
 
+    private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis) {
+        stopService(intent);
+
+        String[] rastavVrijeme = vrijeme.split(":");
+
+        intent.putExtra("alarmOpis", opis);
+        intent.putExtra("alarmDatum", datum);
+        intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
+        intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
+
+        startService(intent);
+        Intent popis = new Intent(this, MainActivity.class);
+        popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(popis);
+    }
 
 }

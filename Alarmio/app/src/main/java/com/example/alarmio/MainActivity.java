@@ -5,11 +5,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
+import com.example.alarmio.alarm_funkcije.KreirajAlarm;
+import com.example.alarmio.recycler_view.PocetniDogadaj;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void novaAktivnost(){
-        Intent intent = new Intent(getApplicationContext(),KreirajAlarm.class);
+        Intent intent = new Intent(getApplicationContext(), KreirajAlarm.class);
         startActivity(intent);
     }
 }

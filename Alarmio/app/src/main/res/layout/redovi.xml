@@ -27,6 +27,12 @@
         android:id="@+id/bottomlayout"
         >
 
+        <Switch
+            android:id="@+id/stanje"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:alpha=".8"
             android:textSize="14sp"

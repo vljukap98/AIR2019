@@ -1,4 +1,4 @@
-package com.example.alarmio;
+package com.example.alarmio.alarm_funkcije;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.alarmio.pokretanje_alarma.Alarmio;
+import com.example.alarmio.R;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
@@ -236,7 +237,7 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
     private void postaviAlarm(String datum, String vrijeme, String opis){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        Intent intent = new Intent(getApplicationContext(),Alarmio.class);
+        Intent intent = new Intent(getApplicationContext(), Alarmio.class);
         intent.putExtra("datum", datum);
         intent.putExtra("vrijeme", vrijeme);
         intent.putExtra("opis", opis);

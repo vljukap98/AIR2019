@@ -34,7 +34,8 @@ android {
 
 dependencies {
 
-    implementation project (':database')
+    implementation project(path: ':mAlarmio')
+    implementation project(path: ':database')
 
     def room_version = "2.2.5"
 

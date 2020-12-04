@@ -1,9 +1,6 @@
-package com.example.alarmio;
+package com.example.alarmio.recycler_view;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
@@ -11,15 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.alarmio.R;
+import com.example.alarmio.alarm_funkcije.AzurirajAlarm;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
@@ -29,7 +29,6 @@ import com.example.database.entities.PonavljaSeDanom;
 import java.util.List;
 
 import static android.media.CamcorderProfile.get;
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHolder> {
     Context context;
@@ -116,6 +115,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView eventText, vrijemeIDatumText, opisText, dani;
         Button brisanjeAlarma, azuriranjeAlarma;
+        Switch dodajAlarm;
         private LinearLayout toplayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,6 +125,7 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
             opisText = itemView.findViewById(R.id.opis);
             brisanjeAlarma = itemView.findViewById(R.id.btnObrisi);
             azuriranjeAlarma = itemView.findViewById(R.id.btnIzmjeni);
+            dodajAlarm = itemView.findViewById(R.id.stanje);
             dani = itemView.findViewById(R.id.dani);
         }
     }
