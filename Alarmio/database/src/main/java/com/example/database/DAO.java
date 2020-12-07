@@ -12,6 +12,7 @@ import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
 import com.example.database.entities.TipNotifikacije;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao

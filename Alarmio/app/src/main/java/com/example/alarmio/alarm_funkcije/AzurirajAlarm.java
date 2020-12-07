@@ -2,9 +2,7 @@ package com.example.alarmio.alarm_funkcije;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -25,13 +23,8 @@ import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.PonavljaSeDanom;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class AzurirajAlarm extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,7 +34,7 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
     String vrijemeObavijest;
     MyDatabase myDatabase;
     EditText opisTekst;
-    List<String> ponavljajuciDani = new ArrayList<String>();
+    ArrayList<String> ponavljajuciDani = new ArrayList<>();
     Boolean ponavljanje;
     private static DAO dao;
 
@@ -72,7 +65,7 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
 
     private void Popunjavanje(){
         alarm = (Alarm) getIntent().getSerializableExtra("Alarm");
-        ponavljajuciDani = dao.loadAllPonavljanjeByAlarm(alarm.getAlarmId());
+        ponavljajuciDani = (ArrayList<String>) dao.loadAllPonavljanjeByAlarm(alarm.getAlarmId());
 
         for(String dan : ponavljajuciDani)
         {
@@ -201,10 +194,10 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
                 }
             }
 
-            ponavljajuciDani.clear();
+
             dao.updateAlarmi(alarm);
 
-            postaviAlarm(datum, vrijeme, opis);
+            postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
         }
     }
 
@@ -236,12 +229,12 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
         timePickerDialog.show();
     }
 
-    private void postaviAlarm(String datum, String vrijeme, String opis){
+    private void postaviAlarm(String datum, String vrijeme, String opis, Integer alarmId){
         final Intent intent = new Intent(this, Alarmio.class);
-        ServiceCaller(intent, datum, vrijeme, opis);
+        ServiceCaller(intent, datum, vrijeme, opis, alarmId);
     }
 
-    private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis) {
+    private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis, Integer alarmId) {
         stopService(intent);
 
         String[] rastavVrijeme = vrijeme.split(":");
@@ -250,6 +243,9 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
         intent.putExtra("alarmDatum", datum);
         intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
         intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
+        intent.putExtra("alarmId", alarmId);
+
+        ponavljajuciDani.clear();
 
         startService(intent);
         Intent popis = new Intent(this, MainActivity.class);

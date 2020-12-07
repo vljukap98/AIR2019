@@ -3,17 +3,16 @@ package com.example.alarmio.recycler_view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alarmio.R;
 import com.example.alarmio.alarm_funkcije.AzurirajAlarm;
-import com.example.alarmio.alarm_funkcije.KreirajAlarm;
 import com.example.alarmio.pokretanje_alarma.Alarmio;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
@@ -29,9 +27,10 @@ import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import static android.media.CamcorderProfile.get;
 
 public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHolder> {
     Context context;
@@ -39,7 +38,6 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
     List<Dani> daniList;
     List<PonavljaSeDanom> ponavljaSeDanomList;
     private static DAO dao;
-    PocetniDogadaj pocetniDogadaj;
 
     public PocetniDogadaj(Context context, List<Alarm> alarmList, List<Dani> daniList, List<PonavljaSeDanom> ponavljaSeDanomList) {
         this.context = context;
@@ -62,10 +60,8 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
         dao = MyDatabase.getInstance(context).getDAO();
         String ponoviDani = "";
         List<String> ponavljanjeDani = dao.loadAllPonavljanjeByAlarm(alarmList.get(position).getAlarmId());
-        Log.d("listaUpita", ponavljanjeDani.toString());
         for(String dan : ponavljanjeDani){
             ponoviDani += dan + "\n";
-            Log.d("ponoviDani", ponoviDani);
         }
         holder.dani.setText(ponoviDani);
         holder.brisanjeAlarma.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +133,8 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                 intent.putExtra("alarmDatum", alarm.getDatum());
                 intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
                 intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
+                intent.putExtra("alarmId", alarm.getAlarmId());
+
                 context.startService(intent);
 
             }

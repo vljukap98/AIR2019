@@ -25,7 +25,6 @@ import com.example.database.entities.PonavljaSeDanom;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,7 +33,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
     String vrijemeObavijest;
     MyDatabase myDatabase;
     EditText opisTekst;
-    List<String> ponavljajuciDani = new ArrayList<String>();
+    ArrayList<String> ponavljajuciDani = new ArrayList<>();
     Boolean ponavljanje;
     private static DAO dao;
     @Override
@@ -168,9 +167,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
-            ponavljajuciDani.clear();
-
-            postaviAlarm(datum, vrijeme, opis);
+            postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
         }
     }
 
@@ -202,12 +199,12 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         timePickerDialog.show();
     }
 
-    private void postaviAlarm(String datum, String vrijeme, String opis){
+    private void postaviAlarm(String datum, String vrijeme, String opis, Integer alarmId){
         final Intent intent = new Intent(this, Alarmio.class);
-        ServiceCaller(intent, datum, vrijeme, opis);
+        ServiceCaller(intent, datum, vrijeme, opis, alarmId);
     }
 
-    private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis) {
+    private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis, Integer alarmId) {
         stopService(intent);
 
         String[] rastavVrijeme = vrijeme.split(":");
@@ -216,6 +213,9 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("alarmDatum", datum);
         intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
         intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
+       intent.putExtra("alarmId", alarmId);
+
+        ponavljajuciDani.clear();
 
         startService(intent);
         Intent popis = new Intent(this, MainActivity.class);
