@@ -1,8 +1,7 @@
-package com.example.alarmio.pokretanje_alarma;
+package com.example.falarmio.pokretanje_alarma;
 
 
 import android.app.Service;
-
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;

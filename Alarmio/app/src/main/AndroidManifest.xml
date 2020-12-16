@@ -9,26 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Alarmio">
-        <activity android:name=".alarm_funkcije.AzurirajAlarm"></activity>
-        <activity android:name=".alarm_funkcije.KreirajAlarm" />
-        <service android:name=".pokretanje_alarma.Alarmio"/>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <receiver
-            android:name=".receiver.PokretanjeRecivera"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

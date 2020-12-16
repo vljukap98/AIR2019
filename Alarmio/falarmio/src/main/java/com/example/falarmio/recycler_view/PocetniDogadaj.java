@@ -1,10 +1,8 @@
-package com.example.alarmio.recycler_view;
+package com.example.falarmio.recycler_view;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.alarmio.R;
-import com.example.alarmio.alarm_funkcije.AzurirajAlarm;
-import com.example.alarmio.pokretanje_alarma.Alarmio;
+import com.example.falarmio.R;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
+import com.example.falarmio.alarm_funkcije.AzurirajAlarm;
+import com.example.falarmio.pokretanje_alarma.Alarmio;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 

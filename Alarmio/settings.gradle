@@ -1,5 +1,4 @@
-include ':mAlarmio'
-include ':database'
-include ':database'
+include ':falarmio:database'
+include ':falarmio'
 include ':app'
 rootProject.name = "Alarmio"

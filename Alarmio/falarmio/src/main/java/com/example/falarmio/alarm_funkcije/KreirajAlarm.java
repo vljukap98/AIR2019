@@ -1,6 +1,4 @@
-package com.example.alarmio.alarm_funkcije;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.falarmio.alarm_funkcije;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,9 +13,11 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.alarmio.pokretanje_alarma.Alarmio;
-import com.example.alarmio.MainActivity;
-import com.example.alarmio.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.falarmio.MainActivityFramework;
+import com.example.falarmio.R;
+import com.example.falarmio.pokretanje_alarma.Alarmio;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
@@ -218,7 +218,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         ponavljajuciDani.clear();
 
         startService(intent);
-        Intent popis = new Intent(this, MainActivity.class);
+        Intent popis = new Intent(this, MainActivityFramework.class);
         popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(popis);
     }
