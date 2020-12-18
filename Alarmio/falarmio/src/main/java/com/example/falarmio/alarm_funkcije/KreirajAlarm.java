@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -223,7 +224,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent1, PendingIntent.FLAG_ONE_SHOT);
         String dateandtime = datum + " " + vrijemeObavijest;
-        DateFormat formatter = new SimpleDateFormat("d-M-yyyy hh:mm");
+        DateFormat formatter = new SimpleDateFormat("d/M/yyyy hh:mm");
         try {
             Date date1 = formatter.parse(dateandtime);
             am.set(AlarmManager.RTC_WAKEUP, date1.getTime(), pendingIntent);

@@ -13,7 +13,7 @@ public class AndroidNotifikacija extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_notifikacija);
-        textView = findViewById(R.id.poruka);
+        textView = findViewById(R.id.poruka1);
         Bundle bundle = getIntent().getExtras();
         textView.setText(bundle.getString("poruka"));
     }

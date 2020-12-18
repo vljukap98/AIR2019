@@ -24,10 +24,9 @@ public class AndroidNotifikacijaBrodcastReceiver extends BroadcastReceiver {
         String text = bundle.getString("alarmOpis");
         String datum = bundle.getString("alarmDatum") + " " + bundle.getString("alarmVrijeme");
 
-
         Intent intent1 = new Intent(context, AndroidNotifikacija.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent1.putExtra("poruka1", text);
+        intent1.putExtra("poruka", text);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent1, PendingIntent.FLAG_ONE_SHOT);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -39,6 +38,8 @@ public class AndroidNotifikacijaBrodcastReceiver extends BroadcastReceiver {
         contentView.setOnClickPendingIntent(R.id.flashButton, pendingSwitchIntent);
         contentView.setTextViewText(R.id.poruka, text);
         contentView.setTextViewText(R.id.datum, datum);
+
+        mBuilder.setSmallIcon(R.drawable.ic_launcher_background);
         mBuilder.setAutoCancel(true);
         mBuilder.setOngoing(true);
         mBuilder.setPriority(Notification.PRIORITY_HIGH);
