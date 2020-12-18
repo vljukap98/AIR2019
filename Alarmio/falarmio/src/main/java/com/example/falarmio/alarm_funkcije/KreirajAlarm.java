@@ -1,6 +1,8 @@
 package com.example.falarmio.alarm_funkcije;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,14 +19,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.falarmio.MainActivityFramework;
 import com.example.falarmio.R;
+import com.example.falarmio.android_notifikacija.AndroidNotifikacijaBrodcastReceiver;
 import com.example.falarmio.pokretanje_alarma.Alarmio;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.PonavljaSeDanom;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
 
@@ -167,7 +174,8 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
-            postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
+            //postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
+            NotificationCaller(opis,datum,vrijeme);
         }
     }
 
@@ -201,19 +209,39 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
 
     private void postaviAlarm(String datum, String vrijeme, String opis, Integer alarmId){
         final Intent intent = new Intent(this, Alarmio.class);
-        ServiceCaller(intent, datum, vrijeme, opis, alarmId);
+        //ServiceCaller(intent, datum, vrijeme, opis, alarmId);
+
+    }
+
+    private void NotificationCaller(String opis, String datum, String vrijeme) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent1 = new Intent(getApplicationContext(), AndroidNotifikacijaBrodcastReceiver.class);
+        intent1.putExtra("alarmOpis", opis);
+        intent1.putExtra("alarmDatum", datum);
+        intent1.putExtra("alarmVrijeme", vrijeme);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent1, PendingIntent.FLAG_ONE_SHOT);
+        String dateandtime = datum + " " + vrijemeObavijest;
+        DateFormat formatter = new SimpleDateFormat("d-M-yyyy hh:mm");
+        try {
+            Date date1 = formatter.parse(dateandtime);
+            am.set(AlarmManager.RTC_WAKEUP, date1.getTime(), pendingIntent);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        finish();
     }
 
     private void ServiceCaller(Intent intent, String datum, String vrijeme, String opis, Integer alarmId) {
         stopService(intent);
 
         String[] rastavVrijeme = vrijeme.split(":");
-
         intent.putExtra("alarmOpis", opis);
         intent.putExtra("alarmDatum", datum);
         intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
         intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
-       intent.putExtra("alarmId", alarmId);
+        intent.putExtra("alarmId", alarmId);
 
         ponavljajuciDani.clear();
 
@@ -222,5 +250,4 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(popis);
     }
-
 }

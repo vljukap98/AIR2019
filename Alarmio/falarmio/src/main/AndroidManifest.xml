@@ -9,27 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Alarmio">
+        <activity android:name=".android_notifikacija.AndroidNotifikacija"></activity>
+        <activity android:name=".alarm_funkcije.AzurirajAlarm" />
+        <activity android:name=".alarm_funkcije.KreirajAlarm" />
 
-    <activity android:name=".alarm_funkcije.AzurirajAlarm"></activity>
-    <activity android:name=".alarm_funkcije.KreirajAlarm" />
-    <service android:name=".pokretanje_alarma.Alarmio"/>
-    <activity android:name=".MainActivityFramework">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <service android:name=".pokretanje_alarma.Alarmio" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+        <activity android:name=".MainActivityFramework">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <receiver
-        android:name=".receiver.PokretanjeRecivera"
-        android:enabled="true">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </receiver>
+        <receiver
+            android:name=".receiver.PokretanjeRecivera"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".android_notifikacija.AndroidNotifikacijaBrodcastReceiver" />
     </application>
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>
