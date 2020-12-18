@@ -70,4 +70,7 @@ public interface DAO {
 
     @Query("DELETE FROM ponavljaSeDanom WHERE alarmId = :alarmId")
     void deleteAllPonavljanjeByAlarm(int alarmId);
+
+    @Query("SELECT count(*) FROM tipNotifikacija")
+    Integer tipTableSize();
 }

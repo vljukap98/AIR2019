@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -35,10 +37,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
-
+    RadioGroup tipNotifikacije;
+    RadioButton odabranTipNotifikacije;
     Button btnVrijeme, btnDatum, btnDodaj, btnPonavljanje;
     CheckBox chkPon, chkUto, chkSri, chkCet, chkPet, chkSub, chkNed;
-    String vrijemeObavijest;
+    String vrijemeObavijest, nazivNotifikacije;
     MyDatabase myDatabase;
     EditText opisTekst;
     ArrayList<String> ponavljajuciDani = new ArrayList<>();
@@ -52,6 +55,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         btnDatum = findViewById(R.id.btnDatum);
         btnDodaj = findViewById(R.id.btnDodaj);
         btnPonavljanje = findViewById(R.id.btnSvakiDan);
+        tipNotifikacije = findViewById(R.id.tipNotifikacije);
         chkPon = findViewById(R.id.chkPon);
         chkUto = findViewById(R.id.chkUto);
         chkSri = findViewById(R.id.chkSri);
@@ -63,10 +67,16 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         btnDatum.setOnClickListener(this);
         btnDodaj.setOnClickListener(this);
         btnPonavljanje.setOnClickListener(this);
+        tipNotifikacije.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                odabranTipNotifikacije = findViewById(checkedId);
+                nazivNotifikacije = odabranTipNotifikacije.getText().toString();
+            }
+        });
         myDatabase = MyDatabase.getInstance(getApplicationContext());
         opisTekst = findViewById(R.id.opisTekst);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -126,9 +136,19 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
             String datum = btnDatum.getText().toString().trim();
             String vrijeme = btnVrijeme.getText().toString().trim();
             String opis = opisTekst.getText().toString();
+            Integer tip;
+
+            if (nazivNotifikacije.equals("Alarm"))
+                tip = 1;
+            else if (tipNotifikacije.equals("Notifikacija"))
+                tip = 2;
+            else
+                tip = 3;
+
             alarm.setDatum(datum);
             alarm.setVrijeme(vrijeme);
             alarm.setOpis(opis);
+            alarm.setTipNotifikacijeId(tip);
             alarm.setAlarmId((int)dao.insertAlarmi(alarm)[0]);
 
             if(ponavljanje=true)

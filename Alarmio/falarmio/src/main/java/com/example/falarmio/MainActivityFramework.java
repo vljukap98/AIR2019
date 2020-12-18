@@ -14,6 +14,7 @@ import com.example.database.MyDatabase;
 import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
+import com.example.database.entities.TipNotifikacije;
 import com.example.falarmio.alarm_funkcije.KreirajAlarm;
 import com.example.falarmio.recycler_view.PocetniDogadaj;
 
@@ -64,6 +65,20 @@ public class MainActivityFramework extends AppCompatActivity implements View.OnC
             Dani danNed = new Dani();
             danNed.setNaziv("Nedjelja");
             danNed.setDanId((int) dao.insertDani(danNed)[0]);
+        }
+
+        if(dao.tipTableSize() == 0) {
+            TipNotifikacije notifikacijaActivity = new TipNotifikacije();
+            notifikacijaActivity.setNaziv("Android activity");
+            notifikacijaActivity.setTipNotifikacijeId((int)dao.insertTipNotifikacija(notifikacijaActivity)[0]);
+
+            TipNotifikacije notifikacijaAndroid = new TipNotifikacije();
+            notifikacijaAndroid.setNaziv("Android notifikacija");
+            notifikacijaAndroid.setTipNotifikacijeId((int)dao.insertTipNotifikacija(notifikacijaAndroid)[0]);
+
+            TipNotifikacije notifikacijaMail = new TipNotifikacije();
+            notifikacijaMail.setNaziv("E-mail notifikacija");
+            notifikacijaMail.setTipNotifikacijeId((int)dao.insertTipNotifikacija(notifikacijaMail)[0]);
         }
     }
 
