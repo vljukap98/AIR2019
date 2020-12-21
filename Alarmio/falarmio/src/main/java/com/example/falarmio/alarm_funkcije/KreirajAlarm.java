@@ -140,7 +140,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
 
             if (nazivNotifikacije.equals("Alarm"))
                 tip = 1;
-            else if (tipNotifikacije.equals("Notifikacija"))
+            else if (nazivNotifikacije.equals("Notifikacija"))
                 tip = 2;
             else
                 tip = 3;
@@ -195,8 +195,10 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
-            //postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
-            NotificationCaller(opis,datum,vrijeme);
+            if (tip == 1)
+                postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
+            else if (tip == 2)
+                NotificationCaller(opis,datum,vrijeme);
         }
     }
 
@@ -230,7 +232,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
 
     private void postaviAlarm(String datum, String vrijeme, String opis, Integer alarmId){
         final Intent intent = new Intent(this, Alarmio.class);
-        //ServiceCaller(intent, datum, vrijeme, opis, alarmId);
+        ServiceCaller(intent, datum, vrijeme, opis, alarmId);
 
     }
 
