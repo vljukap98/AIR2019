@@ -96,38 +96,44 @@
 
     <RadioGroup
         android:id="@+id/tipNotifikacije"
-        android:layout_width="wrap_content"
+        android:layout_width="346dp"
         android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/rbActivity"
-            android:text="Alarm"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Alarm" />
 
         <RadioButton
             android:id="@+id/rbNotifikacija"
-            android:text="Notifikacija"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Notifikacija" />
 
         <RadioButton
             android:id="@+id/rbMailPoruka"
-            android:text="E-mail poruka"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:text="E-mail poruka" />
     </RadioGroup>
+
+    <EditText
+        android:id="@+id/emailKorime"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="5dp"
+        android:hint="Unesite korisničko ime" />
+
     <Button
         android:id="@+id/btnDodaj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:background="@color/design_default_color_primary"
         android:text="Dodaj"
         android:textColor="@color/white" />
-
-
 
 </LinearLayout>

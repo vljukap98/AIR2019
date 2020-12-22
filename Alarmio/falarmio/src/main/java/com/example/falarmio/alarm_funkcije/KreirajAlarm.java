@@ -4,8 +4,10 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +45,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
     CheckBox chkPon, chkUto, chkSri, chkCet, chkPet, chkSub, chkNed;
     String vrijemeObavijest, nazivNotifikacije;
     MyDatabase myDatabase;
-    EditText opisTekst;
+    EditText opisTekst, emailKorime;
     ArrayList<String> ponavljajuciDani = new ArrayList<>();
     Boolean ponavljanje;
     private static DAO dao;
@@ -67,11 +69,18 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         btnDatum.setOnClickListener(this);
         btnDodaj.setOnClickListener(this);
         btnPonavljanje.setOnClickListener(this);
+        emailKorime = findViewById(R.id.emailKorime);
+        emailKorime.setVisibility(View.INVISIBLE);
         tipNotifikacije.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 odabranTipNotifikacije = findViewById(checkedId);
                 nazivNotifikacije = odabranTipNotifikacije.getText().toString();
+                if (nazivNotifikacije.equals("E-mail poruka")){
+                    emailKorime.setVisibility(View.VISIBLE);
+                }else{
+                    emailKorime.setVisibility(View.INVISIBLE);
+                }
             }
         });
         myDatabase = MyDatabase.getInstance(getApplicationContext());
@@ -138,12 +147,13 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
             String opis = opisTekst.getText().toString();
             Integer tip;
 
-            if (nazivNotifikacije.equals("Alarm"))
+            if (nazivNotifikacije.equals("Alarm")) {
                 tip = 1;
-            else if (nazivNotifikacije.equals("Notifikacija"))
+            }else if (nazivNotifikacije.equals("Notifikacija")) {
                 tip = 2;
-            else
+            } else {
                 tip = 3;
+            }
 
             alarm.setDatum(datum);
             alarm.setVrijeme(vrijeme);
@@ -199,6 +209,8 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 postaviAlarm(datum, vrijeme, opis, alarm.getAlarmId());
             else if (tip == 2)
                 NotificationCaller(opis,datum,vrijeme);
+            else if (tip == 3)
+                EmailCaller();
         }
     }
 
@@ -272,5 +284,18 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         Intent popis = new Intent(this, MainActivityFramework.class);
         popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(popis);
+    }
+
+    private void EmailCaller(){
+        String korime = emailKorime.getText().toString();
+        String mailto = "mailto:" + korime + "@gmail.com" + "?cc=" + "&subject=" + Uri.encode("your subject") + "&body=" + Uri.encode("your mail body");
+        Intent emailintent = new Intent(Intent.ACTION_SENDTO);
+        emailintent.setData(Uri.parse(mailto));
+
+        try{
+            startActivity(emailintent);
+        }catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Error to open email app", Toast.LENGTH_SHORT).show();
+        }
     }
 }
