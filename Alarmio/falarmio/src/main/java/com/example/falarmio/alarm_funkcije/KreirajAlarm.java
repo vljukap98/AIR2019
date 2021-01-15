@@ -39,11 +39,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class KreirajAlarm extends AppCompatActivity implements View.OnClickListener {
-    RadioGroup tipNotifikacije;
-    RadioButton odabranTipNotifikacije;
+    RadioGroup tipNotifikacije, tipZvuka;
+    RadioButton odabranTipNotifikacije, odabraniZvuk;
     Button btnVrijeme, btnDatum, btnDodaj, btnPonavljanje;
     CheckBox chkPon, chkUto, chkSri, chkCet, chkPet, chkSub, chkNed;
-    String vrijemeObavijest, nazivNotifikacije;
+    String vrijemeObavijest, nazivNotifikacije, nazivZvuka;
     MyDatabase myDatabase;
     EditText opisTekst, emailKorime;
     ArrayList<String> ponavljajuciDani = new ArrayList<>();
@@ -58,6 +58,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         btnDodaj = findViewById(R.id.btnDodaj);
         btnPonavljanje = findViewById(R.id.btnSvakiDan);
         tipNotifikacije = findViewById(R.id.tipNotifikacije);
+        tipZvuka = findViewById(R.id.tipZvuka);
         chkPon = findViewById(R.id.chkPon);
         chkUto = findViewById(R.id.chkUto);
         chkSri = findViewById(R.id.chkSri);
@@ -83,9 +84,18 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+        tipZvuka.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                odabraniZvuk=findViewById(checkedId);
+                nazivZvuka = odabraniZvuk.getText().toString();
+            }
+        });
+
         myDatabase = MyDatabase.getInstance(getApplicationContext());
         opisTekst = findViewById(R.id.opisTekst);
     }
+
 
     @Override
     public void onClick(View view) {
