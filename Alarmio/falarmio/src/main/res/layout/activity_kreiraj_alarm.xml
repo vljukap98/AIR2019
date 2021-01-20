@@ -94,10 +94,12 @@
         android:text="Ponavljanje svaki dan"
         android:textColor="@color/white" />
 
+
     <RadioGroup
         android:id="@+id/tipNotifikacije"
         android:layout_width="346dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rbActivity"
@@ -106,19 +108,17 @@
             android:text="Alarm" />
 
         <RadioButton
-            android:id="@+id/rbNotifikacija"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notifikacija" />
-
-        <RadioButton
             android:id="@+id/rbMailPoruka"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="E-mail poruka" />
+
+        <RadioButton
+            android:id="@+id/rbNotifikacija"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notifikacija" />
     </RadioGroup>
-
-
 
     <EditText
         android:id="@+id/emailKorime"
@@ -131,7 +131,8 @@
     <RadioGroup
         android:id="@+id/tipZvuka"
         android:layout_width="346dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rbZvuk1"

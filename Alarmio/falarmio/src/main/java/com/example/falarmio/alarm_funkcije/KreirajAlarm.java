@@ -261,7 +261,6 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
     private void postaviAlarm(String datum, String vrijeme, String opis, Integer alarmId){
         final Intent intent = new Intent(this, Alarmio.class);
         ServiceCaller(intent, datum, vrijeme, opis, alarmId);
-
     }
 
     private void NotificationCaller(String opis, String datum, String vrijeme) {
