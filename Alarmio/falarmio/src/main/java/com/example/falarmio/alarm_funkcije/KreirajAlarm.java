@@ -78,9 +78,15 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
                 odabranTipNotifikacije = findViewById(checkedId);
                 nazivNotifikacije = odabranTipNotifikacije.getText().toString();
                 if (nazivNotifikacije.equals("E-mail poruka")){
+                    tipZvuka.setVisibility(View.INVISIBLE);
                     emailKorime.setVisibility(View.VISIBLE);
-                }else{
+                }else if (nazivNotifikacije.equals("Alarm")){
                     emailKorime.setVisibility(View.INVISIBLE);
+                    tipZvuka.setVisibility(View.VISIBLE);
+                }else if(nazivNotifikacije.equals("Notifikacija"))
+                {
+                    emailKorime.setVisibility(View.INVISIBLE);
+                    tipZvuka.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -287,6 +293,7 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("alarmSati", Integer.parseInt(rastavVrijeme[0]));
         intent.putExtra("alarmMinute", Integer.parseInt(rastavVrijeme[1]));
         intent.putExtra("alarmId", alarmId);
+        intent.putExtra("alarmZvuk", nazivZvuka);
 
         ponavljajuciDani.clear();
 

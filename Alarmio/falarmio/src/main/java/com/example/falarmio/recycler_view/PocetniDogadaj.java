@@ -73,13 +73,8 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                 }
                 dao.deleteAlarmi(alarm);
                 dao.deleteAllPonavljanjeByAlarm(alarm.getAlarmId());
-                /*Treba doraditi*/
                 alarmList.remove(alarmList.get(position));
                 holder.toplayout.removeViewAt(position);
-
-                /*pocetniDogadaj = new PocetniDogadaj(context,alarmList);
-                pocetniDogadaj.notifyItemRemoved(position);
-                pocetniDogadaj.notifyItemRangeChanged(position,alarmList.size());*/
             }
         });
         holder.azuriranjeAlarma.setOnClickListener(new View.OnClickListener() {

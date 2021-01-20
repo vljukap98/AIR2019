@@ -21,13 +21,13 @@ import java.util.TimerTask;
 
 public class Alarmio extends Service { //Kada se zatvori aplikacija alarm ne zvoni
     private Integer alarmSati, alarmId, alarmMinute;
-    private String alarmDatum;
+    private String alarmDatum, alarmZvuk;
     private String alarmOpis;
     private static DAO dao;
 
     private Ringtone ringtone;
     private Timer t = new Timer();
-    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    Uri notification;
 
     @Nullable
     @Override
@@ -41,6 +41,14 @@ public class Alarmio extends Service { //Kada se zatvori aplikacija alarm ne zvo
         alarmMinute = intent.getIntExtra("alarmMinute", 0);
         alarmDatum = intent.getStringExtra("alarmDatum");
         alarmId = intent.getIntExtra("alarmId", 0);
+        alarmZvuk = intent.getStringExtra("alarmZvuk");
+
+        if(alarmZvuk.equals("Zvuk1"))
+            notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        else if(alarmZvuk.equals("Zvuk2"))
+            notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        else if(alarmZvuk.equals("Zvuk3"))
+            notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 
         MyDatabase myDatabase = MyDatabase.getInstance(getApplicationContext());
         dao = myDatabase.getDAO();

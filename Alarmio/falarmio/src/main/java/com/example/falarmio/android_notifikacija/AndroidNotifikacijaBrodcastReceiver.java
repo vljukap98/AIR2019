@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class AndroidNotifikacijaBrodcastReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         String text = bundle.getString("alarmOpis");
         String datum = bundle.getString("alarmDatum") + " " + bundle.getString("alarmVrijeme");
+        String zvuk = bundle.getString("alarmZvuk");
 
         Intent intent1 = new Intent(context, AndroidNotifikacija.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
