@@ -1,0 +1,25 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.example.falarmio'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId 'com.example.falarmio'
+                artifactId 'falarmio'
+                name 'falarmio'
+                description 'Framework for easy alarm creating.'
+                url 'https://github.com/AIR-FOI-HR/AIR2019/tree/main'
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+}
