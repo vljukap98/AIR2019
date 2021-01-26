@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.falarmio.MainActivityFramework;
 import com.example.falarmio.R;
 import com.example.falarmio.android_notifikacija.AndroidNotifikacijaBrodcastReceiver;
 import com.example.falarmio.pokretanje_alarma.Alarmio;
@@ -297,9 +295,6 @@ public class KreirajAlarm extends AppCompatActivity implements View.OnClickListe
         ponavljajuciDani.clear();
 
         startService(intent);
-        Intent popis = new Intent(this, MainActivityFramework.class);
-        popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(popis);
     }
 
     private void EmailCaller(){

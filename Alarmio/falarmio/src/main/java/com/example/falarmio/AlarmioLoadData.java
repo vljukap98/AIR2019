@@ -1,12 +1,7 @@
 package com.example.falarmio;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.database.DAO;
@@ -15,26 +10,16 @@ import com.example.database.entities.Alarm;
 import com.example.database.entities.Dani;
 import com.example.database.entities.PonavljaSeDanom;
 import com.example.database.entities.TipNotifikacije;
-import com.example.falarmio.alarm_funkcije.KreirajAlarm;
 import com.example.falarmio.recycler_view.PocetniDogadaj;
 
 import java.util.List;
 
-public class MainActivityFramework extends AppCompatActivity implements View.OnClickListener {
-    Button kreirajAlarm, btnObrisi;
+public class AlarmioLoadData {
     PocetniDogadaj pocetniDogadaj;
-    RecyclerView recyclerView;
     MyDatabase myDatabase;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        kreirajAlarm = findViewById(R.id.btnKreirajAlarm);
-        btnObrisi = findViewById(R.id.btnObrisi);
-        recyclerView = findViewById(R.id.recyclerview);
-        kreirajAlarm.setOnClickListener(this);
-        myDatabase = MyDatabase.getInstance(getApplicationContext());
+    public void DatabaseInitialize(Context context){
+        myDatabase = MyDatabase.getInstance(context);
 
         DAO dao = myDatabase.getDAO();
         if(dao.daniTableSize() == 0) {
@@ -81,31 +66,11 @@ public class MainActivityFramework extends AppCompatActivity implements View.OnC
             notifikacijaMail.setTipNotifikacijeId((int)dao.insertTipNotifikacija(notifikacijaMail)[0]);
         }
     }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        postaviDogadaj();
-
-    }
-
-    public void postaviDogadaj(){
+    public void postaviDogadaj(RecyclerView rv, Context context){
         List<Alarm> alarmList = myDatabase.getDAO().loadAllAlarmi();
         List<Dani> daniList = myDatabase.getDAO().loadAllDani();
         List<PonavljaSeDanom> ponavljaSeDanomList = myDatabase.getDAO().loadAllPonavljaSeDanom();
-        pocetniDogadaj = new PocetniDogadaj(getApplicationContext(),alarmList, daniList, ponavljaSeDanomList);
-        recyclerView.setAdapter(pocetniDogadaj);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view == kreirajAlarm){
-            novaAktivnost();
-        }
-    }
-
-    private void novaAktivnost(){
-        Intent intent = new Intent(getApplicationContext(), KreirajAlarm.class);
-        startActivity(intent);
+        pocetniDogadaj = new PocetniDogadaj(context,alarmList, daniList, ponavljaSeDanomList);
+        rv.setAdapter(pocetniDogadaj);
     }
 }

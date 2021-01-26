@@ -62,6 +62,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    
+    //rec_view i cardview
+    def recyclerview_version = "1.0.0"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.recyclerview:recyclerview-selection:$recyclerview_version"
+    implementation "androidx.cardview:cardview:$recyclerview_version"
+    implementation 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
 }
 apply from: 'install.gradle'
 apply from: 'bintray.gradle'

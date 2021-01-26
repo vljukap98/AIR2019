@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
-import com.example.falarmio.MainActivityFramework;
 import com.example.falarmio.R;
 import com.example.falarmio.pokretanje_alarma.Alarmio;
 import com.example.database.entities.Alarm;
@@ -248,8 +247,5 @@ public class AzurirajAlarm extends AppCompatActivity implements View.OnClickList
         ponavljajuciDani.clear();
 
         startService(intent);
-        Intent popis = new Intent(this, MainActivityFramework.class);
-        popis.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(popis);
     }
 }

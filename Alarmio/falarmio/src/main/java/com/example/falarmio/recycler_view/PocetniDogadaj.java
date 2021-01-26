@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.falarmio.AlarmioLoadData;
 import com.example.falarmio.R;
 import com.example.database.DAO;
 import com.example.database.MyDatabase;
@@ -74,7 +75,6 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
                 dao.deleteAlarmi(alarm);
                 dao.deleteAllPonavljanjeByAlarm(alarm.getAlarmId());
                 alarmList.remove(alarmList.get(position));
-                holder.toplayout.removeViewAt(position);
             }
         });
         holder.azuriranjeAlarma.setOnClickListener(new View.OnClickListener() {
@@ -143,15 +143,12 @@ public class PocetniDogadaj extends RecyclerView.Adapter<PocetniDogadaj.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView eventText, vrijemeIDatumText, opisText, dani;
+        private TextView vrijemeIDatumText, opisText, dani;
         Button brisanjeAlarma, azuriranjeAlarma;
         Switch dodajAlarm;
-        private LinearLayout toplayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            eventText = itemView.findViewById(R.id.dogadaj);
             vrijemeIDatumText = itemView.findViewById(R.id.vrijeme_datum);
-            toplayout = itemView.findViewById(R.id.toplayout);
             opisText = itemView.findViewById(R.id.opis);
             brisanjeAlarma = itemView.findViewById(R.id.btnObrisi);
             azuriranjeAlarma = itemView.findViewById(R.id.btnIzmjeni);
